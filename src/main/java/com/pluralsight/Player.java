@@ -20,6 +20,12 @@ public class Player {
         return handValue;
     }
 
+    public void reset () {
+        this.hand = new Hand();
+        this.busted = false;
+        this.sit = false;
+    }
+
     public void display () {
         int handValue = this.hand.getValue();
         if (handValue <= 21) {
@@ -40,6 +46,10 @@ public class Player {
 
     public boolean isSitting () {
         return this.sit;
+    }
+
+    public void setSitting () {
+        this.sit = true;
     }
 
     public boolean isBusted () {

@@ -47,8 +47,8 @@ public class Card {
         }
     }
 
-    public String showCard () {
-        return this.value + " " + this.suit;
+    public void showCard () {
+        System.out.println("Card: " + this.value + " " + this.suit);
     }
 
     public boolean isFaceUp(){
