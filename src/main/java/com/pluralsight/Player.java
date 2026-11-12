@@ -14,8 +14,9 @@ public class Player {
     }
 
     public int getHandValue () {
-        System.out.println("PLayer: " + this.name + " Hand: " + this.hand.getValue());
-        return this.hand.getValue();
+        int handValue = this.hand.getValue();
+        System.out.println("PLayer: " + this.name + " Hand: " + handValue);
+        return handValue;
     }
 
 }

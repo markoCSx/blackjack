@@ -46,6 +46,11 @@ public class Card {
             return 0;
         }
     }
+
+    public String showCard () {
+        return this.value + " " + this.suit;
+    }
+
     public boolean isFaceUp(){
         return faceUp;
     }
