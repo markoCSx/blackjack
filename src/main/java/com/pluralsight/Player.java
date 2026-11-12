@@ -3,6 +3,8 @@ package com.pluralsight;
 public class Player {
     private String name;
     private Hand hand;
+    private boolean busted;
+    private boolean sit;
 
     public Player (String name) {
         this.name = name;
@@ -15,8 +17,32 @@ public class Player {
 
     public int getHandValue () {
         int handValue = this.hand.getValue();
-        System.out.println("PLayer: " + this.name + " Hand: " + handValue);
         return handValue;
     }
 
+    public void display () {
+        int handValue = this.hand.getValue();
+        if (handValue <= 21) {
+            System.out.println("PLayer: " + this.name + " Hand: " + handValue);
+        }
+        if (handValue > 21) {
+            System.out.println("PLayer: " + this.name + " Hand: " + handValue + " BUSTED!");
+            this.busted = true;
+        }
+        if (handValue == 21) {
+            this.sit = true;
+        }
+    }
+
+    public String getName () {
+        return this.name;
+    }
+
+    public boolean isSitting () {
+        return this.sit;
+    }
+
+    public boolean isBusted () {
+        return this.busted;
+    }
 }
