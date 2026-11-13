@@ -40,12 +40,10 @@ public class Player {
         this.hand.deal(card);
         int handValue = this.hand.getValue();
         if (handValue > 21) {
-            this.busted = true;
-            currentPlayers--;
+            setBust();
         }
         if (handValue == 21) {
-            this.holding = true;
-            currentHolders++;
+            setHold();
         }
         display();
     }
