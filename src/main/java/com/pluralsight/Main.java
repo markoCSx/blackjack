@@ -69,6 +69,12 @@ public class Main {
                 players.get(i).display();
             }
             if (players.get(i).isPlaying()) {
+                if (Player.getCurrentPlayers() == 1) {
+                    if (!players.get(i).isBusted()) {
+                        System.out.println(players.get(i).getName() + " WON!");
+                        return;
+                    }
+                }
                 Card card = deck.deal();
                 players.get(i).grabCard(card);
             }
