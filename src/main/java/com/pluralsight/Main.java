@@ -82,11 +82,27 @@ public class Main {
                         return;
                     }
                 }
+                if (Player.getcurrentHolders() > 0) {
+                    if (checkToHold(players, i)) {
+                        players.get(i).setHold();
+                        continue;
+                    }
+                }
                 Card card = deck.deal();
                 players.get(i).grabCard(card);
             }
         }
     }
+
+    public static boolean checkToHold(ArrayList<Player> players, int index) {
+        for (int i = 0; i < players.size(); i++) {
+            if (!players.get(i).isBusted() && (players.get(i).getHandValue() > players.get(index).getHandValue())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static boolean winner (ArrayList<Player> players, Scanner userInput) {
         boolean tie = false;
