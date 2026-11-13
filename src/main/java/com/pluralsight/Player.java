@@ -4,15 +4,23 @@ public class Player {
     private String name;
     private Hand hand;
     private boolean busted;
-    private boolean sit;
+    private boolean holding;
 
     public Player (String name) {
         this.name = name;
         this.hand = new Hand();
     }
 
+    public boolean isPlaying () {
+        if (this.busted || this.holding) {
+            return false;
+        }
+        return true;
+    }
+
     public void grabCard (Card card) {
         this.hand.deal(card);
+        display();
     }
 
     public int getHandValue () {
@@ -23,7 +31,7 @@ public class Player {
     public void reset () {
         this.hand = new Hand();
         this.busted = false;
-        this.sit = false;
+        this.holding = false;
     }
 
     public void display () {
@@ -36,7 +44,7 @@ public class Player {
             this.busted = true;
         }
         if (handValue == 21) {
-            this.sit = true;
+            this.holding = true;
         }
     }
 
@@ -45,11 +53,11 @@ public class Player {
     }
 
     public boolean isSitting () {
-        return this.sit;
+        return this.holding;
     }
 
     public void setSitting () {
-        this.sit = true;
+        this.holding = true;
     }
 
     public boolean isBusted () {
