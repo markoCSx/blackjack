@@ -57,7 +57,6 @@ public class Player {
 
     public void reset () {
         this.hand = new Hand();
-        this.busted = false;
         this.holding = false;
         setcurrentHolders(0);
     }
@@ -79,6 +78,11 @@ public class Player {
     public void setHold() {
         this.holding = true;
         currentHolders++;
+    }
+
+    public void setBust() {
+        this.busted = true;
+        currentPlayers--;
     }
 
     public boolean isHolding () {

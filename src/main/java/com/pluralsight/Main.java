@@ -93,8 +93,7 @@ public class Main {
     }
 
     public static boolean winner (ArrayList<Player> players, Scanner userInput) {
-        ArrayList<Player> newPlayers = new ArrayList<>();
-        ArrayList<Integer> indexs = new ArrayList<>();
+        boolean tie = false;
         int index = 0;
         int highestHolder = 0;
         for (int i = 0; i < players.size(); i++) {
@@ -109,23 +108,20 @@ public class Main {
                     if (players.get(i).getHandValue() > highestHolder) {
                         highestHolder = players.get(i).getHandValue();
                         index = i;
-                    }
-                    if (players.get(i).getHandValue() == highestHolder) {
-                        indexs.add(i);
+                    } else if (players.get(i).getHandValue() == highestHolder) {
+                        tie = true;
+                    } else {
+                        players.get(i).setBust();
                     }
                 }
             }
         }
         if (Player.getCurrentPlayers() == Player.getcurrentHolders()) {
-            if (indexs.isEmpty()) {
+            if (!tie) {
                 System.out.println(players.get(index).getName() + " WON!");
                 return true;
             } else {
-                for (int i = 0; i < indexs.size(); i++) {
-                    newPlayers.add(players.get(indexs.get(i)));
-                }
-                Player.setCurrentPlayers(indexs.size());
-                playBlackjack(newPlayers, userInput);
+                playBlackjack(players, userInput);
                 return true;
             }
         }
