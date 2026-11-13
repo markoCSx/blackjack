@@ -49,11 +49,21 @@ public class Main {
         do {
 
             dealPlayers(players, deck);
+            if (players.get(0).isPlaying()) {
+                questionPlayer(userInput, players);
+            }
 
         } while (!winner());
 
 
         userInput.close();
+    }
+
+    public static void questionPlayer (Scanner userInput, ArrayList<Player> players) {
+        System.out.println("Would you like to Hit or Hold");
+        if (userInput.nextLine().equalsIgnoreCase("hold")) {
+            players.get(0).setHold();
+        }
     }
 
     public static void dealPlayers(ArrayList<Player> players, Deck deck) {

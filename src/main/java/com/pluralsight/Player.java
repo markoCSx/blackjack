@@ -56,7 +56,7 @@ public class Player {
         return this.holding;
     }
 
-    public void setSitting () {
+    public void setHold() {
         this.holding = true;
     }
 
