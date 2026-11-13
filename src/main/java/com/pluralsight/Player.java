@@ -82,6 +82,10 @@ public class Player {
 
     public void setBust() {
         this.busted = true;
+        if (isHolding()) {
+            currentHolders--;
+            this.holding = false;
+        }
         currentPlayers--;
     }
 

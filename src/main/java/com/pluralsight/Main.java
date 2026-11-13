@@ -5,21 +5,19 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static String ogPlayerName = "";
 
     public static void main(String[] args) {
 
         Scanner userInput = new Scanner(System.in);
         String userText = " ";
 
-
+        ArrayList<Player> players = new ArrayList<>();
 
         while (!userText.equalsIgnoreCase("x")) {
-            ArrayList<Player> players = new ArrayList<>();
+            players.clear();
             System.out.println("Enter anything to continue or \"x\" to exit");
             userText = userInput.nextLine();
             if (!userText.equalsIgnoreCase("x")) {
-                ogPlayerName = "";
                 playBlackjack(players, userInput);
             }
         }
@@ -33,18 +31,16 @@ public class Main {
             String[] playerNames = {"Martin", "Cody", "Nick", "Ryan", "Kheran", "Rick"};
             System.out.println("Enter player name: ");
 
-            if (ogPlayerName.isEmpty()) {
-                String playerName = userInput.nextLine();
-                ogPlayerName = playerName;
-                playerNames[0] = playerName;
-            }
+
+            String playerName = userInput.nextLine();
+            playerNames[0] = playerName;
 
             for (int i = 0; i < playerNames.length; i++) {
                 players.add(new Player(playerNames[i]));
             }
-        }
 
-        Player.setCurrentPlayers(players.size());
+            Player.setCurrentPlayers(players.size());
+        }
 
         for (int i = 0; i < players.size(); i++) {
             players.get(i).reset();
@@ -56,11 +52,10 @@ public class Main {
         do {
 
             dealPlayers(players, deck);
-            if (players.get(0).isPlaying() && players.get(0).getName().equals(ogPlayerName)) {
+            if (players.get(0).isPlaying()) {
                 questionPlayer(userInput, players);
-            } else {
-                ogPlayerName = "";
             }
+
 
         } while (!winner(players, userInput));
 
@@ -69,7 +64,9 @@ public class Main {
 
     public static void questionPlayer (Scanner userInput, ArrayList<Player> players) {
         System.out.println("Would you like to Hit or Hold");
-        if (userInput.nextLine().equalsIgnoreCase("hold")) {
+        String userText = "";
+        userText = userInput.nextLine();
+        if (userText.equalsIgnoreCase("hold")) {
             players.get(0).setHold();
         }
     }
@@ -82,7 +79,6 @@ public class Main {
             if (players.get(i).isPlaying()) {
                 if (Player.getCurrentPlayers() == 1) {
                     if (!players.get(i).isBusted()) {
-                        System.out.println(players.get(i).getName() + " WON!");
                         return;
                     }
                 }
@@ -97,15 +93,12 @@ public class Main {
         int index = 0;
         int highestHolder = 0;
         for (int i = 0; i < players.size(); i++) {
-            if (Player.getCurrentPlayers() == 1) {
-                if (!players.get(i).isBusted()) {
-                    System.out.println(players.get(i).getName() + " WON!");
-                    return true;
-                }
-            }
             if (Player.getCurrentPlayers() == Player.getcurrentHolders()) {
                 if (!players.get(i).isBusted()) {
                     if (players.get(i).getHandValue() > highestHolder) {
+                        if (i != 0 && !players.get(0).isBusted()) {
+                            players.get(index).setBust();
+                        }
                         highestHolder = players.get(i).getHandValue();
                         index = i;
                     } else if (players.get(i).getHandValue() == highestHolder) {
@@ -113,6 +106,12 @@ public class Main {
                     } else {
                         players.get(i).setBust();
                     }
+                }
+            }
+            if (Player.getCurrentPlayers() == 1) {
+                if (!players.get(i).isBusted()) {
+                    System.out.println(players.get(i).getName() + " WON!");
+                    return true;
                 }
             }
         }
