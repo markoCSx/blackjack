@@ -5,7 +5,7 @@ public class Player {
     private Hand hand;
     private boolean busted;
     private boolean holding;
-    private static int currentPlayers = 4;
+    private static int currentPlayers = 0;
     private static int currentHolders = 0;
 
     public Player (String name) {

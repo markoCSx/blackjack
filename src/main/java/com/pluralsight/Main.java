@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    public static String ogPlayerName = "";
+
     public static void main(String[] args) {
 
         Scanner userInput = new Scanner(System.in);
@@ -16,7 +19,7 @@ public class Main {
             System.out.println("Enter anything to continue or \"x\" to exit");
             userText = userInput.nextLine();
             if (!userText.equalsIgnoreCase("x")) {
-                Player.setCurrentPlayers(4);
+                ogPlayerName = "";
                 playBlackjack(players, userInput);
             }
         }
@@ -25,17 +28,23 @@ public class Main {
     }
 
     public static void playBlackjack (ArrayList<Player> players, Scanner userInput) {
-        String userText = " ";
 
         if (players.isEmpty()) {
-            String[] playerNames = {"Martin", "Cody", "Nick", "Ryan"};
+            String[] playerNames = {"Martin", "Cody", "Nick", "Ryan", "Kheran", "Rick"};
             System.out.println("Enter player name: ");
 
-            playerNames[0] = userInput.nextLine();
+            if (ogPlayerName.isEmpty()) {
+                String playerName = userInput.nextLine();
+                ogPlayerName = playerName;
+                playerNames[0] = playerName;
+            }
+
             for (int i = 0; i < playerNames.length; i++) {
                 players.add(new Player(playerNames[i]));
             }
         }
+
+        Player.setCurrentPlayers(players.size());
 
         for (int i = 0; i < players.size(); i++) {
             players.get(i).reset();
@@ -47,8 +56,10 @@ public class Main {
         do {
 
             dealPlayers(players, deck);
-            if (players.get(0).isPlaying()) {
+            if (players.get(0).isPlaying() && players.get(0).getName().equals(ogPlayerName)) {
                 questionPlayer(userInput, players);
+            } else {
+                ogPlayerName = "";
             }
 
         } while (!winner(players, userInput));
@@ -96,6 +107,7 @@ public class Main {
             if (Player.getCurrentPlayers() == Player.getcurrentHolders()) {
                 if (!players.get(i).isBusted()) {
                     if (players.get(i).getHandValue() > highestHolder) {
+                        highestHolder = players.get(i).getHandValue();
                         index = i;
                     }
                     if (players.get(i).getHandValue() == highestHolder) {
@@ -109,12 +121,12 @@ public class Main {
                 System.out.println(players.get(index).getName() + " WON!");
                 return true;
             } else {
-                indexs.add(index);
                 for (int i = 0; i < indexs.size(); i++) {
                     newPlayers.add(players.get(indexs.get(i)));
                 }
                 Player.setCurrentPlayers(indexs.size());
                 playBlackjack(newPlayers, userInput);
+                return true;
             }
         }
         return false;
