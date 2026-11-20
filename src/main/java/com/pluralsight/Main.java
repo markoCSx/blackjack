@@ -56,7 +56,6 @@ public class Main {
                 questionPlayer(userInput, players);
             }
 
-
         } while (!winner(players, userInput));
 
 
